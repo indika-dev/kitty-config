@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-#kitten themes --reload-in=all Kanagawa
-kitty +kitten themes --reload-in=parent Kanagawa

@@ -6,11 +6,11 @@ from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional
 
 from kittens.ssh.utils import get_connection_data
-from paramiko import SSHConfig
+# from paramiko import SSHConfig
 
 from kitty.boss import Boss
 from kitty.fast_data_types import Color, Screen, get_boss, get_options
-from kitty.tab_bar import Dict, DrawData, ExtraData, TabBarData, as_rgb, draw_title
+from kitty.tab_bar import DrawData, ExtraData, TabBarData, as_rgb, draw_title
 from kitty.utils import color_as_int
 from kitty.window import Window
 
@@ -149,7 +149,7 @@ def _draw_element(
     return end
 
 
-def _calc_elements_len(elements: List[Dict[str, Any]]) -> int:
+def _calc_elements_len(elements: List[dict[str, Any]]) -> int:
     elements_len = 0
     for element in elements:
         title, icon = element["title"], element["icon"]
@@ -176,7 +176,7 @@ def _is_running_pager(active_window: Window) -> bool:
         return False
 
 
-def _get_system_info(active_window: Window) -> Dict[str, Any]:
+def _get_system_info(active_window: Window) -> dict[str, Any]:
     # Local info (and fallback for errors on remote info)
     user = getpass.getuser()
     host = socket.gethostname()
@@ -208,7 +208,7 @@ def _get_system_info(active_window: Window) -> Dict[str, Any]:
             if len(user_and_host) == 1:
                 host = user_and_host[0]
                 config_fpath = str(Path(SSH_CONFIG_FILE).expanduser())
-                host_config = SSHConfig.from_path(config_fpath).lookup(host)
+                host_config = [] # SSHConfig.from_path(config_fpath).lookup(host)
                 if "user" in host_config:
                     user = host_config["user"]
             # When the command line specifies both host and user, we just use these
@@ -222,7 +222,7 @@ def _get_system_info(active_window: Window) -> Dict[str, Any]:
     return {"user": user, "host": host, "is_ssh": is_ssh}
 
 
-def _get_git_info(active_window: Window, is_ssh: bool) -> Dict[str, Any]:
+def _get_git_info(active_window: Window, is_ssh: bool) -> dict[str, Any]:
     # Git info currently only works in non-remote windows
     if is_ssh:
         return {"is_git_repo": False, "branch": ""}
